@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f5e8d6">
   <meta name="description" content="小流浪守护计划秋冬收集册，沿园区寻找小动物，扫码点亮收集。">
-  <title>秋冬收集册 · 小流浪守护计划（内网测试版）</title>
+  <title>秋冬收集册</title>
   <style>
 :root {
   color-scheme: light;
@@ -23,10 +23,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; cursor: pointer; }
 a { color: inherit; }
 button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #9a6634; outline-offset: 3px; }
-.app-shell { max-width: 840px; min-height: 100dvh; margin: auto; overflow: hidden; background: radial-gradient(circle at 90% 8%, #f9eedb 0, transparent 30%), radial-gradient(circle at 12% 70%, #f4e6d0 0, transparent 35%), #f8ecdc; box-shadow: 0 15px 65px #655c4930; padding-bottom: env(safe-area-inset-bottom); }
-.topbar { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 5.5%; font-size: 25px; font-weight: 700; letter-spacing: .06em; }
-.topbar .back, .topbar .more { width: 35px; border: 0; background: transparent; text-align: center; text-decoration: none; font-family: Arial, sans-serif; font-size: 38px; font-weight: 300; line-height: 1; }
-.topbar .more { font-size: 28px; font-weight: 700; letter-spacing: .06em; transform: translateY(-7px); }
+.app-shell { max-width: 840px; min-height: 100dvh; margin: auto; overflow: hidden; background: radial-gradient(circle at 90% 8%, #f9eedb 0, transparent 30%), radial-gradient(circle at 12% 70%, #f4e6d0 0, transparent 35%), #f8ecdc; box-shadow: 0 15px 65px #655c4930; padding-bottom: env(safe-area-inset-bottom); padding-top: 12px; }
 main { padding: 0 6% 18px; }
 .hero { position: relative; padding-top: 14px; }
 .hero-title { position: relative; width: fit-content; min-width: 52%; margin: 6px 0 20px 2.5%; padding: 8px 27px 11px 37px; transform: rotate(-1deg); color: #fff7e8; background: linear-gradient(95deg, #68743f, #798044 75%, #596b36); box-shadow: 5px 5px 0 #c7ae84, 0 8px 18px #9b7a5650; clip-path: polygon(0 8%, 3% 4%, 8% 6%, 12% 3%, 26% 5%, 38% 2%, 53% 5%, 67% 2%, 84% 6%, 96% 1%, 100% 10%, 99% 96%, 91% 98%, 75% 95%, 62% 100%, 48% 96%, 29% 99%, 15% 96%, 0 100%); font-size: clamp(30px, 5vw, 49px); letter-spacing: .16em; white-space: nowrap; }
@@ -70,14 +67,20 @@ main { padding: 0 6% 18px; }
 .reward-heading h2 { flex: none; margin: 0; padding: 3px 22px 6px; color: white; background: #778047; clip-path: polygon(0 5%, 15% 0, 33% 5%, 50% 0, 68% 5%, 88% 0, 100% 7%, 99% 94%, 78% 100%, 60% 95%, 36% 100%, 13% 96%, 0 100%); font-size: clamp(22px, 3.5vw, 31px); letter-spacing: .08em; }
 .reward-heading span { flex: none; padding: 2px 9px; background: #e9ceaa; font-size: 14px; }
 .reward-heading:after { content: ""; width: 100%; border-top: 1px solid #c0b49d; }
-.milestones { display: grid; grid-template-columns: repeat(4, 1fr); margin: 9px 1% 14px; }
-.milestone { position: relative; display: flex; align-items: center; flex-direction: column; gap: 4px; min-height: 79px; font-size: 19px; }
-.milestone:before { content: ""; position: absolute; z-index: 0; left: -50%; right: 50%; top: 42px; height: 3px; background: #c6af91; }
-.milestone:first-child:before { display: none; }
-.milestone.active:before { background: #829052; }
-.gift-icon { position: relative; z-index: 1; width: 27px; height: 27px; color: #8a9364; }
-.milestone .dot { position: relative; z-index: 1; width: 18px; height: 18px; border: 2px solid #c9ae8a; border-radius: 50%; background: #fbf0e0; }
-.milestone.active .dot { border-color: #7b874b; background: #7b874b; }
+.progress-track { position: relative; height: 96px; margin: 18px 1% 8px; }
+.progress-rail { position: absolute; left: 4%; right: 4%; top: 44px; height: 12px; border-radius: 20px; background: #e3d4bd; box-shadow: inset 0 1px 3px #b6a184; }
+.progress-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, #829052, #6e7c40); box-shadow: 0 1px 3px #6f624c66; transition: width .4s ease; }
+.progress-marker { display: none; }
+.progress-node { position: absolute; top: 50px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; width: 66px; pointer-events: none; }
+.pnode-dot { width: 18px; height: 18px; border: 3px solid #c9ae8a; border-radius: 50%; background: #fbf0e0; box-shadow: 0 1px 3px #b6a18499; }
+.progress-node.reached .pnode-dot { border-color: #5e6a35; background: #7b874b; box-shadow: 0 1px 4px #5e6637aa; }
+.progress-node.reached .pnode-dot:after { content: "✓"; display: grid; place-items: center; width: 100%; height: 100%; color: white; font: bold 11px/1 Arial, sans-serif; }
+.pnode-label { margin-top: 7px; color: #6f6047; font-size: 12px; white-space: nowrap; }
+.pnode-label b { font: italic 16px/1 Georgia, serif; color: #554e3d; }
+.progress-node.reached .pnode-label { color: #5e6637; font-weight: 700; }
+.pnode-gift { margin-top: 2px; }
+.pnode-gift svg { width: 20px; height: 20px; color: #a89a7e; }
+.progress-node.reached .pnode-gift svg { color: #7b874b; }
 .reward-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px 18px; }
 .reward-card { min-width: 0; padding: 9px 9px 11px; background: #fff5e6; border: 1px solid #e8d9c4; border-radius: 18px; box-shadow: 0 4px 7px #846e5540; text-align: center; }
 .reward-photo { position: relative; height: clamp(125px, 25vw, 180px); overflow: hidden; border-radius: 12px; background: radial-gradient(circle at 30% 25%, #fff9ed, transparent 45%), linear-gradient(140deg, #e5cfb2, #e9d8c3 50%, #cdb495); }
@@ -136,8 +139,14 @@ footer { padding: 3px 7% 24px; color: #958673; text-align: center; font-size: 11
 .rules-list span { color: #675d4c; font-size: 14px; }
 .rules-note { padding: 11px; background: #efe5ce; }
 @media (max-width: 600px) {
-  .topbar { height: 53px; padding: 0 4%; font-size: 19px; }
   main { padding: 0 4% 14px; }
+  .progress-track { height: 84px; margin-top: 12px; }
+  .progress-rail { top: 40px; }
+  .progress-node { top: 46px; }
+  .pnode-dot { width: 15px; height: 15px; border-width: 2px; }
+  .pnode-label { font-size: 10px; }
+  .pnode-label b { font-size: 14px; }
+  .pnode-gift svg { width: 16px; height: 16px; }
   .hero-title { min-width: 70%; padding: 6px 13px 8px 30px; margin: 8px 0 18px 3%; font-size: clamp(25px, 7.4vw, 37px); }
   .leaf { font-size: 41px; left: -7px; }
   .sprig { font-size: 40px; right: 0; }
@@ -183,11 +192,6 @@ footer { padding: 3px 7% 24px; color: #958673; text-align: center; font-size: 11
 </head>
 <body>
   <div class="app-shell">
-    <header class="topbar">
-      <a class="back" href="https://welare.alibaba-inc.com/strayAnimal" aria-label="返回小流浪列表">‹</a>
-      <span>小流浪守护计划</span>
-      <button class="more" type="button" id="more" aria-label="查看活动说明">···</button>
-    </header>
     <main id="app"><p class="loading">正在打开秋冬收集册…</p></main>
     <footer>动物形象与奖品图为展示示意，活动规则和实物以最终公布为准。</footer>
   </div>
@@ -292,7 +296,8 @@ footer { padding: 3px 7% 24px; color: #958673; text-align: center; font-size: 11
       '</div></section>' +
       '<p class="album-hint">扫描纸板上的二维码即可点亮。已点亮的动物，点击可看海报与真实档案。</p>' +
       '<section class="rewards" aria-labelledby="reward-title"><div class="reward-heading"><h2 id="reward-title">收集奖励</h2><span>示例奖励</span></div>' +
-        '<div class="milestones">' + rewards.map(r => '<div class="milestone ' + (count >= r.count ? 'active' : '') + '">' + giftIcon + '<span class="dot"></span><span>' + r.count + ' 只</span></div>').join('') + '</div>' +
+        '<div class="progress-track" aria-label="收集进度 ' + count + '/20"><div class="progress-rail"><div class="progress-fill" style="width:' + Math.min(100, count / 20 * 100) + '%"></div></div>' +
+          rewards.map((r, i) => '<div class="progress-node ' + (count >= r.count ? 'reached' : 'next') + '" style="left:' + (r.count / 20 * 100) + '%"><span class="pnode-dot"></span><span class="pnode-label"><b>' + r.count + '</b> 只</span><span class="pnode-gift">' + giftIcon + '</span></div>').join('') + '</div>' +
         '<div class="reward-grid">' + rewards.map(r => '<article class="reward-card">' + prizeArt(r.art) + '<h3>' + r.title + '</h3><span class="reward-condition">' + r.condition + '</span></article>').join('') + '</div>' +
         '<p class="reward-note">领取时请出示收集页，分享奖励另需出示小红书笔记。<small>奖品及门槛仅为示意，待活动确认。</small></p></section>' +
       '<details class="demo-tools"><summary>演示操作 · 体验四只已接入动物</summary><p>其余 16 格展示布局，尚未接入动物资料。点击下方链接模拟扫码。</p>' +
@@ -370,7 +375,6 @@ footer { padding: 3px 7% 24px; color: #958673; text-align: center; font-size: 11
     }, 1000);
     redirectTimer = setTimeout(() => { stopRedirect(); location.assign(scannedAnimal.detail); }, 3000);
   }
-  document.getElementById("more").addEventListener("click", openRules);
   render();
   showScanResult();
   addEventListener("pagehide", () => { stopRedirect(); document.querySelector(".scan-sheet")?.remove(); });
